@@ -2,9 +2,13 @@
 
 Frontend repository for the AI Meeting → Execution product. It will provide the user experience for authentication, workspaces, meetings, review, tasks, settings, and integrations. It is intended to deploy independently from the API.
 
-## Status
+## Authentication implementation
 
-Bootstrap only. No UI screens, application behavior, or backend integration have been implemented.
+The initial web application implements the API-owned authentication experience: registration and email OTP, local and Google/Microsoft sign-in, password recovery/reset, account settings, explicit identity linking/unlinking, session revocation, sign-out, account disablement, deletion requests, and email-change confirmation.
+
+## Frontend stack
+
+The web app uses Next.js App Router, React, TypeScript, Tailwind CSS, React Hook Form, and Zod. Custom page styling belongs in scoped SCSS modules. The small `components/ui` layer uses semantic native controls with composable variants in the shadcn/ui style. The API is deployed and verified before production web integration; set `NEXT_PUBLIC_API_URL` to that deployed API base URL.
 
 ## Repository boundaries
 
@@ -15,9 +19,27 @@ Bootstrap only. No UI screens, application behavior, or backend integration have
 
 ## Local setup and commands
 
-There is no runnable application or dependency manifest in this bootstrap. Development commands, environment variables, tests, and deployment instructions will be added after requirements and implementation are approved.
+Use Node.js 22 or newer with pnpm 11.25.0. Enable Corepack, install dependencies, copy `.env.example` to `.env.local`, and run the development server:
 
-Copy `.env.example` to `.env.local` when a later phase adds the application. Never commit local environment files or credentials.
+```sh
+corepack enable
+pnpm install --frozen-lockfile
+cp .env.example .env.local
+pnpm dev
+```
+
+The API's `WEB_ORIGINS` must include the exact web origin (normally `http://localhost:3000`). The browser calls the API with credentialed requests and obtains a CSRF token before each mutation. Session cookies remain HttpOnly and owned by the API; provider and session secrets are not stored in browser storage.
+
+Available checks:
+
+```sh
+pnpm typecheck
+pnpm lint
+pnpm format:check
+pnpm build
+```
+
+Copy `.env.example` to `.env.local` for local development. Never commit local environment files or credentials.
 
 ## Development workflow
 

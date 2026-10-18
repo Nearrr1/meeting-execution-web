@@ -1,0 +1,53 @@
+@import '@fontsource-variable/dm-sans';
+@import '@fontsource-variable/newsreader';
+@import 'tailwindcss';
+
+:root {
+  --paper: #f4f1e8;
+  --paper-bright: #fbfaf6;
+  --ink: #192521;
+  --muted: #68736c;
+  --line: #d9ded4;
+  --forest: #1b352b;
+  --forest-deep: #142a22;
+  --moss: #8ba38d;
+  --acid: #d2e67d;
+  --coral: #d77d5d;
+  --danger: #a84535;
+  --success: #2f6949;
+  --font-body: 'DM Sans Variable', sans-serif;
+  --font-display: 'Newsreader Variable', Georgia, serif;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-forest: var(--forest);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--paper);
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+::selection {
+  color: var(--forest-deep);
+  background: var(--acid);
+}
