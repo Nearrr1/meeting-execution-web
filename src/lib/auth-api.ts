@@ -32,12 +32,11 @@ export interface SessionSummary {
   userAgentLabel?: string;
 }
 
-const apiBase = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '');
+const apiBase = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') || '/api/v1';
 let csrfToken: string | undefined;
 let csrfRequest: Promise<string> | undefined;
 
 function getApiBase(): string {
-  if (!apiBase) throw new Error('NEXT_PUBLIC_API_URL is not configured');
   return apiBase;
 }
 
@@ -90,7 +89,7 @@ export async function apiRequest<T = void>(path: string, options: ApiRequestOpti
 }
 
 export function oidcStartUrl(provider: Provider, options: { intent?: 'link'; returnTo?: string } = {}) {
-  const url = new URL(`${getApiBase()}/auth/oidc/${provider}/start`);
+  const url = new URL(`${getApiBase()}/auth/oidc/${provider}/start`, window.location.origin);
   if (options.intent) url.searchParams.set('intent', options.intent);
   if (options.returnTo) url.searchParams.set('returnTo', options.returnTo);
   return url.toString();
